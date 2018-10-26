@@ -8,6 +8,6 @@ public class App
         String txt_in_path = "../my_mapreduce/testing_files/file1.txt";
         String txt_out_path = "../my_mapreduce/testing_files/file2.txt";
 
-        file_reader.txt_reader(txt_in_path, txt_out_path);
+        txt_editor.reader(txt_in_path, txt_out_path);
     }
 }
