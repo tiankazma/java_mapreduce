@@ -3,6 +3,7 @@ package tian.bigdata.my_mapreduce;
 import java.io.File;
 import java.io.InputStreamReader;
 
+import org.apache.commons.io.output.WriterOutputStream;
 import org.apache.tools.ant.taskdefs.TempFile;
 
 import java.io.BufferedReader;
@@ -18,6 +19,8 @@ public class file_reader {
 		File file_in = new File(inpath);
 		File file_out = new File(outpath);
 		
+		String data = "";
+		
 		try {
 			// check the target file is existted or not:
 			if (!file_in.exists()) {
@@ -27,20 +30,31 @@ public class file_reader {
 				file_out.createNewFile();
 			}
 			
-			//read file
+			//for read txt
 			InputStreamReader isr = new InputStreamReader(new FileInputStream(file_in), "utf-8");
 			BufferedReader br = new BufferedReader(isr);
 			
-			// -1 == null
+			//for write-in txt
+			BufferedWriter bw = new BufferedWriter(new FileWriter(file_out));
+			
 			String temp = null;
 			while ((temp = br.readLine()) != null) {
 				//split by '-' and space
+				data = new String();
+				
 				for(String sub_temp: temp.split("-| ")) {
-					System.out.print(sub_temp + " && ");
+					data += sub_temp + " && ";
 				}
-				System.out.println();
+				data += "\n";
+				
+				// write data into target file.
+				bw.write(data);
 			}
 			
+			//close buffer writer
+			bw.close();
+			
+			//close buffer reader
 			br.close();
 			isr.close();
 		} catch (IOException e) {
