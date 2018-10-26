@@ -2,9 +2,13 @@ package tian.bigdata.my_mapreduce;
 
 import java.io.File;
 import java.io.InputStreamReader;
+
+import org.apache.tools.ant.taskdefs.TempFile;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileInputStream;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
@@ -24,9 +28,21 @@ public class file_reader {
 			}
 			
 			//read file
-			InputStreamReader reader = new InputStreamReader(new FileInputStream(file_in));
-			BufferedReader br = new BufferedReader(reader);
-			String line = "";
+			InputStreamReader isr = new InputStreamReader(new FileInputStream(file_in), "utf-8");
+			BufferedReader br = new BufferedReader(isr);
+			
+			// -1 == null
+			String temp = null;
+			while ((temp = br.readLine()) != null) {
+				//split by '-' and space
+				for(String sub_temp: temp.split("-| ")) {
+					System.out.print(sub_temp + " && ");
+				}
+				System.out.println();
+			}
+			
+			br.close();
+			isr.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
